@@ -25,6 +25,19 @@ function createGrid(){
    }
 }
 
+var mouseDown = false;
+document.onmousedown = function(){
+   mouseDown = true;
+}
+document.onmouseup = function(){
+   mouseDown = false;
+}
+document.onmousemove = function(e){
+   if(mouseDown){
+      document.querySelector("canvas").onclick(e);
+   }
+}
+
 document.querySelector("canvas").onclick = function(e){
    var coords = [e.clientX - (canvas.getBoundingClientRect().left), e.clientY - (canvas.getBoundingClientRect().top)];
    var coords = [roundToNearest(coords[0], gridSize), roundToNearest(coords[1], gridSize)];
@@ -32,7 +45,5 @@ document.querySelector("canvas").onclick = function(e){
    context.fillStyle = '#222';
    context.rect(coords[0] + 1, coords[1] + 1, gridSize - 1, gridSize - 1);
    context.fill();
-
-   console.log(coords);
 }
 createGrid();
