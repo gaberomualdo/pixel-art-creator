@@ -1,3 +1,12 @@
+function downloadURI(uri, name) {
+   var link = document.createElement("a");
+   link.download = name;
+   link.href = uri;
+   document.body.appendChild(link);
+   link.click();
+   document.body.removeChild(link);
+   delete link;
+}
 function roundToNearest(num, numberToRound){
    return Math.floor(num/parseFloat(numberToRound)) * numberToRound;
 }
@@ -7,6 +16,7 @@ canvas.width = 720;
 canvas.height = 540;
 var context = canvas.getContext("2d");
 var gridSize = 30;
+var fillColor = '#222';
 
 function createGrid(){
    context.lineWidth = 1;
@@ -38,11 +48,11 @@ document.onmousemove = function(e){
    }
 }
 
-context.fillStyle = '#222';
 document.querySelector("canvas").onclick = function(e){
    var coords = [e.clientX - (canvas.getBoundingClientRect().left), e.clientY - (canvas.getBoundingClientRect().top)];
    var coords = [roundToNearest(coords[0], gridSize), roundToNearest(coords[1], gridSize)];
 
+   context.fillStyle = fillColor;
    context.rect(coords[0] + 1, coords[1] + 1, gridSize - 1, gridSize - 1);
    context.fill();
 }
